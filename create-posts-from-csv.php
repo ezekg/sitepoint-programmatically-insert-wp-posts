@@ -7,7 +7,7 @@ function sp_debug( $var ) {
 /**
  * Generate posts from CSV
  */
-// add_action( "init", function() {
+// add_action( "admin_init", function() {
 // 	global $current_user;
 
 // 	// Check if the user is an administrator, and if the correct post variable

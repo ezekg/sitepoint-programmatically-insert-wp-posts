@@ -14,18 +14,18 @@ In order to get all the data we need from the CSV files, we'll be making use of 
 
 In reality, most of the data we'll be using for this article would probably be inside of a single CSV, as opposed to how we're going to be doing it today where the data is scattered throughout multiple files. This is done so that the techniques used here can be implemented using other types of data, such as JSON, Yaml, or even plain text files. The idea for this whole article came from the severe lack of tutorials and articles concerning this subject, especially when you're custom post types and custom fields.
 
-## The Data
+## Getting To Know Our Data
 
 Before we really get going, let's take a look at the data we're going to be dealing with. If you want to follow along, you can grab the needed CSV files (and all of the code used in this article, if you want) from [this repo](https://github.com/ezekg/sitepoint-programmatically-insert-wp-posts).
 
 ![Example of CSV data](/image.jpg)
 
-## The Requirements
-
-```php
-$this->is_sparta;
-```
+## A Couple Prerequisites
 
 It's worth mentioning that the code used in this article requires at least **PHP 5.3**. We'll be making use of [anonymous functions](http://php.net/manual/en/functions.anonymous.php), as well as `fgetcsv()`, both of which require 5.3; so, before you go off and use this on an old rickety production server _(please, don't do that)_, [you might want to upgrade](http://www.sitepoint.com/legacy-code-cancer/).
 
 Another thing to mention is that I'm not going to get into PHP's [`max_execution_time`](http://php.net/manual/en/info.configuration.php#ini.max-execution-time), which can cause some issues when inserting a large amount of posts in one go; the setting varies so much from server to server that it's not feasible to discuss it in this article. If you'd like to learn more on that, there's a ton of information on Stack Overflow, as well as the official PHP docs.
+
+## The Nitty-gritty
+
+To begin, let's create a simple button on within _back-end_ of our site. This will ensure that our code is only executed by us, the administrator.
