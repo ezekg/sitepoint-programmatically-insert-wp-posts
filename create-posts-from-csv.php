@@ -65,23 +65,23 @@ function sp_debug( $var ) {
 		return $data;
 	};
 
+	// Simple check to see if the current post exists within the
+	//  database. This isn't very efficient, but it works.
+	$post_exists = function( $title ) {
+		global $wpdb;
+
+		// Get an array of all posts within our custom post type
+		$posts = $wpdb->get_col( "SELECT post_title FROM $wpdb->posts WHERE post_type = 'sp_tutorial'" );
+
+		// Check if the passed title exists in array
+		return in_array( $title, $posts );
+	};
+
 	foreach ( $posts() as $post ) {
 
 		sp_debug($post);
 
 		continue;
-
-		// Simple check to see if the current post exists within the
-		//  database. This isn't very efficient, but it works.
-		$post_exists = function( $title ) {
-			global $wpdb;
-
-			// Get an array of all posts within our custom post type
-			$posts = $wpdb->get_col( "SELECT post_title FROM $wpdb->posts WHERE post_type = 'sp_tutorial'" );
-
-			// Check if the passed title exists in array
-			return in_array( $title, $posts );
-		};
 
 		// If the post exists, skip this post and go to the next one
 		if ( $post_exists( $post["title"] ) ) {
