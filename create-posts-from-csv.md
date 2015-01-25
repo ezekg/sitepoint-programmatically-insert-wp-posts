@@ -18,7 +18,7 @@ In reality, most of the data we'll be using for this article would probably be i
 
 Before we really get going, let's take a look at the data we're going to be dealing with. If you want to follow along, you can grab the needed CSV files (and all of the code used in this article, if you want) from [this repo]().
 
-![Example of CSV data](/img.jpg)
+![Example of CSV data](/image.jpg)
 
 ## The Code
 
