@@ -28,4 +28,4 @@ Another thing to mention is that I'm not going to get into PHP's [`max_execution
 
 ## The Nitty-gritty
 
-To begin, let's create a simple button on within _back-end_ of our site. This will ensure that our code is only executed by us, the administrator.
+To start this off, let's create a simple button that executes our script within the _back-end_ of our site. This will ensure that our code is only executed by us, the administrator.
