@@ -7,15 +7,15 @@ function sp_debug( $var ) {
 /**
  * Generate posts from CSV
  */
-// add_action( "admin_init", function() {
-// 	global $current_user;
+add_action( "admin_init", function() {
+	global $current_user;
 
-// 	// Check if the user is an administrator, and if the correct post variable
-// 	//  exists. I'd recommend replacing this with your own code to make sure
-// 	//  the post creation _only_ happens when you want it to.
-// 	if ( ! current_user_can( "manage_options" ) && ! isset( $_POST["sp_create_posts"] ) ) {
-// 		exit;
-// 	}
+	// Check if the user is an administrator, and if the correct post variable
+	//  exists. I'd recommend replacing this with your own code to make sure
+	//  the post creation _only_ happens when you want it to.
+	if ( ! current_user_can( "manage_options" ) && ! isset( $_POST["sp_create_posts"] ) ) {
+		exit;
+	}
 
 	// Get the data from all those CSVs!
 	$posts = function() {
@@ -119,4 +119,4 @@ function sp_debug( $var ) {
 
 	}
 
-// });
+});
