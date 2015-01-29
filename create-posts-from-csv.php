@@ -1,20 +1,24 @@
 <?php
 
+/**
+ * SitePoint tutorial code
+ */
 function sp_debug( $var ) {
 	echo "<pre>" . print_r( $var, true ) . "</pre>";
 }
 
 /**
  * Generate posts from CSV
+ *
+ * @return {Void}
  */
 add_action( "admin_init", function() {
-	global $current_user;
+	global $wpdb;
 
-	// Check if the user is an administrator, and if the correct post variable
-	//  exists. I'd recommend replacing this with your own code to make sure
+	// I'd recommend replacing this with your own code to make sure
 	//  the post creation _only_ happens when you want it to.
-	if ( ! current_user_can( "manage_options" ) && ! isset( $_POST["sp_create_posts"] ) ) {
-		exit;
+	if ( ! isset( $_GET["insert_sitepoint_posts"] ) ) {
+		return;
 	}
 
 	// Get the data from all those CSVs!
@@ -67,21 +71,16 @@ add_action( "admin_init", function() {
 
 	// Simple check to see if the current post exists within the
 	//  database. This isn't very efficient, but it works.
-	$post_exists = function( $title ) {
-		global $wpdb;
+	$post_exists = function( $title ) use ( $wpdb ) {
 
 		// Get an array of all posts within our custom post type
-		$posts = $wpdb->get_col( "SELECT post_title FROM $wpdb->posts WHERE post_type = 'sp_tutorial'" );
+		$posts = $wpdb->get_col( "SELECT post_title FROM $wpdb->posts WHERE post_type = 'sitepoint_posts'" );
 
 		// Check if the passed title exists in array
 		return in_array( $title, $posts );
 	};
 
 	foreach ( $posts() as $post ) {
-
-		sp_debug($post);
-
-		continue;
 
 		// If the post exists, skip this post and go to the next one
 		if ( $post_exists( $post["title"] ) ) {
@@ -92,15 +91,18 @@ add_action( "admin_init", function() {
 		$post["id"] = wp_insert_post( array(
 			"post_title" => $post["title"],
 			"post_content" => $post["content"],
-			"post_type" => "sp_tutorial",
+			"post_type" => "sitepoint_posts",
 			"post_status" => "publish"
 		));
 
+		// Get uploads dir
+		$uploads_dir = wp_upload_dir();
+
 		// Set attachment meta
 		$attachment = array();
-		$attachment["path"] = realpath( $post["attachment"] );
-		$attachment["type"] = wp_check_filetype( $attachment["path"] );
-		$attachment["name"] = basename( $attachment["path"], ".{$attachment["type"]}" );
+		$attachment["path"] = "{$uploads_dir["baseurl"]}/sitepoint-attachments/{$post["attachment"]}";
+		$attachment["file"] = wp_check_filetype( $attachment["path"] );
+		$attachment["name"] = basename( $attachment["path"], ".{$attachment["file"]["ext"]}" );
 
 		// Replace post attachment data
 		$post["attachment"] = $attachment;
@@ -108,15 +110,15 @@ add_action( "admin_init", function() {
 		// Insert attachment into media library
 		$post["attachment"]["id"] = wp_insert_attachment( array(
 			"guid" => $post["attachment"]["path"],
-			"post_mime_type" => $post["attachment"]["type"],
+			"post_mime_type" => $post["attachment"]["file"]["type"],
 			"post_title" => $post["attachment"]["name"],
 			"post_content" => "",
 			"post_status" => "inherit"
 		));
 
 		// Update post's custom field with attachment
-		update_field( "field_5396ad95c962f", $post["attachment"]["id"], $post["id"] );
-
+		update_field( "field_54c99410050e2", $post["attachment"]["id"], $post["id"] );
+		
 	}
 
 });

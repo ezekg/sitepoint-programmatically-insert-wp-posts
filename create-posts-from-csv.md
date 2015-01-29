@@ -24,8 +24,12 @@ Before we really get going, let's take a look at the data we're going to be deal
 
 It's worth mentioning that the code used in this article requires at least **PHP 5.3**. We'll be making use of [anonymous functions](http://php.net/manual/en/functions.anonymous.php), as well as `fgetcsv()`, both of which require 5.3; so, before you go off and use this on an old rickety production server _(please, don't do that)_, [you might want to upgrade](http://www.sitepoint.com/legacy-code-cancer/).
 
-Another thing to mention is that I'm not going to get into PHP's [`max_execution_time`](http://php.net/manual/en/info.configuration.php#ini.max-execution-time), which can cause some issues when inserting a large amount of posts in one go; the setting varies so much from server to server that it's not feasible to discuss it in this article. If you'd like to learn more on that, there's a ton of information on Stack Overflow, as well as the official PHP docs.
+Another thing to mention is that I'm not going to get into PHP's [`max_execution_time`](http://php.net/manual/en/info.configuration.php#ini.max-execution-time), which can cause some issues when inserting a large amount of posts in one go; the setting varies so much from server to server that it's not feasible to discuss it in this article. If you'd like to learn more, there's a ton of information on Stack Overflow, as well as on the official PHP docs on how to go about increasing your max execution time.
 
 ## The Nitty-gritty
 
 To start this off, let's create a simple button that executes our script within the _back-end_ of our site. This will ensure that our code is only executed by us, the administrator.
+
+...stuff about creating the backend button that executes the script.
+
+I mentioned earlier that we would be using anonymous functions (I'll refer to these as [closures](http://culttt.com/2013/03/25/what-are-php-lambdas-and-closures/) from now on) throughout this article, and the reason for this is that it's not really worth polluting the global namespace with a bunch of functions that are essentially throw-away functions. Cloures are great, and if you aren't familiar with them, I'd highly suggest reading up on them. If you come from JavaScript or Ruby background, you'll feel right at home. 
