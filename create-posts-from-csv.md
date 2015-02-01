@@ -10,7 +10,7 @@ In reality, most of the data we'll be using for this article would probably be i
 
 ## Getting To Know Our Data
 
-If you want to follow along, you can grab the needed CSV files (and all of the code used in this article, too) from [this repo](https://github.com/ezekg/sitepoint-programmatically-insert-wp-posts). First things first, let's take a look at the CSV data we're going to be dealing with: (please note the 'File' column, which is there to show you that I am spreading all of this data across multiple CSV files)
+If you want to follow along, you can grab the needed CSV files (and all of the code used in this article, too) from [this repo](https://github.com/ezekg/sitepoint-programmatically-insert-wp-posts). Alrighty, first things first, let's take a look at the CSV data we're going to be dealing with: (please note the 'File' column, which is there to show you that I am spreading all of this data across multiple CSV files)
 
 | File        | Title                 | Content                         | Attachment      |
 |:----------- |:--------------------- |:------------------------------- |:--------------- |
@@ -19,11 +19,13 @@ If you want to follow along, you can grab the needed CSV files (and all of the c
 | dummy3.csv  | some title for post 3 | some content for the third post | attachment3.txt |
 | dummy3.csv  | some title 4          | some content for post 4         | attachment4.txt |
 
-Pretty simple, huh? Next, we'll take a look at the custom post type we'll be using. I created it using [Custom Post Type UI](http://webdevstudios.com/plugins/custom-post-type-ui/), so you can do the same, or do it yourself. Here's a quick screenshot of the options we'll be using: (I am highlighting slugs and other fields that we'll be using throughout this article, so keep that in mind)
+Pretty simple, huh? Next, we'll take a look at the custom post type we'll be using. I created it using [Custom Post Type UI](http://webdevstudios.com/plugins/custom-post-type-ui/), so you can use the same settings if you're using the plugin, or do it yourself with WordPress' many functions. Here's a quick screenshot of the options we'll be using: (I am highlighting slugs and other fields that we'll be using throughout this article, so keep that in mind)
 
 ![Custom Post Type UI Settings](https://raw.githubusercontent.com/ezekg/sitepoint-programmatically-insert-wp-posts/master/screenshots/custom-post-type-ui-settings.jpg)
 
-Lastly, let's take a look at the custom field we'll be using. It's created with the lovely [Advanced Custom Fields](http://www.advancedcustomfields.com/). Here's another quick screenshot of the settings we'll be using. Please note, the ID for your custom field will be different from the one used in this article, so be sure to update your `$sitepoint` array with the correct ID. This can be either the actual hash key for the field, or simply the name of the field. I'm just going to stick to the name, for the sake of clarity.
+Lastly, let's take a look at the custom field we'll be using. It's created with the lovely [Advanced Custom Fields](http://www.advancedcustomfields.com/). Here's another quick screenshot of the settings we'll be using.
+
+_Please note, the ID for your custom field will likely be different from the one used in this article, so be sure to update your `$sitepoint` array with the correct ID. This can either be the actual hash key for the field, or simply the name of the field. I'm just going to stick to the name, for the sake of clarity._
 
 ![Advanced Custom Fields Settings](https://raw.githubusercontent.com/ezekg/sitepoint-programmatically-insert-wp-posts/master/screenshots/advanced-custom-fields-settings.jpg)
 
