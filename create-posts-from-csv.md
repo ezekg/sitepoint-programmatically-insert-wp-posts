@@ -6,7 +6,7 @@ I won't bore you with the code for creating custom post types and custom fields,
 
 In order to get all the data we need from the CSV files, we'll be making use of a few nifty PHP functions, such as: [`glob()`](http://php.net/manual/en/function.glob.php), which 'globs' a directory and returns an array of filenames within it; [`fopen()`](http://php.net/manual/en/function.fopen.php), which opens up a file so that we can read its contents; and finally, [`fgetcsv()`](http://php.net/manual/en/function.fgetcsv.php), which parses a CSV file into a nice associative array housing all our data.
 
-In reality, most of the data we'll be using for this article would probably be inside of a single CSV, as opposed to how we're going to be doing it today where the data is scattered throughout multiple files. This is done so that the techniques used here can be implemented using other types of data, such as JSON, Yaml, or even plain text files. The idea for this whole article came from the severe lack of tutorials and articles concerning this subject, especially when you're using custom post types and custom fields.
+_In reality, most of the data we'll be using for this article would probably be inside of a single CSV, as opposed to how we're going to be doing it today where the data is scattered throughout multiple files. This is done so that the techniques used here can be implemented using other types of data, such as JSON, Yaml, or even plain text files. The idea for this whole article came from the severe lack of tutorials and articles concerning this subject, especially when you're using custom post types and custom fields._
 
 ## Getting To Know Our Data
 
@@ -35,9 +35,9 @@ It's worth mentioning that the code used in this article requires at least **PHP
 
 Another thing to mention is that I'm not going to get into PHP's [`max_execution_time`](http://php.net/manual/en/info.configuration.php#ini.max-execution-time), which can cause some issues when inserting a large amount of posts in one go; the setting varies so much from server to server that it's not feasible to discuss it in this article. If you'd like to learn more, there's a ton of information on Stack Overflow, as well as on the official PHP docs on how to go about increasing your max execution time.
 
-## The Nitty-gritty
+## Executing Our Code
 
-To start this off, let's create a simple button that executes our script within the _back-end_ of our site. This will ensure that our code is only executed by us, the administrator. To do that, we'll just make use of WordPress' [`admin_notices`](http://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices) hook. Basically, all it's going to be doing to creating a `$_POST` variable that we'll use to determine whether or not we should insert the posts into the database.
+To start this off, let's create a simple button that executes our script within the _back-end_ of our site. This will ensure that our code is only executed by us, the administrator. To do that, we'll just make use of WordPress' [`admin_notices`](http://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices) hook. Basically, all it's going to be doing is creating a `$_POST` variable that we'll use to determine whether or not we should insert the posts into the database.
 
 ```php
 /**
@@ -95,7 +95,7 @@ $sitepoint = array(
 // ...
 ```
 
-### Gathering Our Data
+### The Nitty-gritty
 
 Next, let's create a closure that will fetch all of our CSV data and create a nice associative array of all of the data. Now, it would be good to note that depending on what type of data you're using (whether that be CSV, JSON, Yaml, etc.), this closure will vary. So, I would suggest that you adjust this to fit your data. I've commented the code below so that you can better follow what is actually going on.
 
