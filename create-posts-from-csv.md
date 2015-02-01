@@ -41,7 +41,7 @@ To start this off, let's create a simple button that executes our script within 
 
 ```php
 /**
- * Show insert posts button on backend
+ * Show 'insert posts' button on backend
  */
 add_action( "admin_notices", function() {
     echo "<div class='updated'>";
@@ -55,9 +55,9 @@ add_action( "admin_notices", function() {
 
 ### Setting Up
 
-I mentioned earlier that we would be using anonymous functions (I'll refer to them as [closures](http://culttt.com/2013/03/25/what-are-php-lambdas-and-closures/), for simplicity) throughout this article, and the reason for this is that it's not really worth polluting the global namespace with a bunch of functions that are essentially throw-away functions. Cloures are great, and if you aren't familiar with them, I'd highly suggest reading up on them. If you come from JavaScript or Ruby background, you'll feel right at home.
+I mentioned earlier that we would be using anonymous functions (I'll refer to them as [closures](http://culttt.com/2013/03/25/what-are-php-lambdas-and-closures/), for simplicity) throughout this article, and the reason for this is that it's not really worth polluting the global namespace with a bunch of functions that are essentially throw-away functions. Cloures are great, and if you aren't familiar with them, I'd highly suggest reading up on them. If you come from a JavaScript or Ruby background, you'll feel right at home.
 
-If you want to put all of this code into your `functions.php` file, that's fine, though it's also fine if you want to create a separate page template, a hidden page, whatever. In the end, it really doesn't matter. To start out, let's use another WordPress hook, [`admin_init`](http://codex.wordpress.org/Plugin_API/Action_Reference/admin_init). We'll also include the [`$wpdb`](http://codex.wordpress.org/Class_Reference/wpdb) global, so that we can do a custom database query later on.
+If you want to put all of this code into your `functions.php` file, that's fine, though it's also fine if you want to create a separate page template, a hidden page, or whatever. In the end, it really doesn't matter. To start out, let's use another WordPress hook, [`admin_init`](http://codex.wordpress.org/Plugin_API/Action_Reference/admin_init). We'll also include the [`$wpdb`](http://codex.wordpress.org/Class_Reference/wpdb) global, so that we can do a custom database query later on.
 
 ```php
 /**
@@ -72,9 +72,9 @@ add_action( "admin_init", function() {
 
 ### To `$_POST` Or Not To `$_POST`
 
-Alright, so what next? Let's start out by check whether or not our `$_POST` variable is present, and if it isn't, we can exit the function. No use in wasting memory on nothing. To check whether out variable is present, we'll use `$_GET`. If you're not familiar with these types of variables, you can read up on them [here](http://php.net/manual/en/reserved.variables.request.php). In addition to the above check, we'll also define out `$sitepoint` array that I mentioned earlier. It will contain your custom post type and custom field ID's.
+Alright, so what next? Let's start out by check whether or not our `$_POST` variable is present, and if it isn't, we can exit the function. No use in wasting memory on nothing. To check whether our variable is present, we'll use the `$_GET` variable. If you're not familiar with these types of variables, you can read up on them [here](http://php.net/manual/en/reserved.variables.request.php). In addition to the above check, we'll also define our `$sitepoint` array that I mentioned earlier. It will contain your custom post type and custom field ID's.
 
-It's worth noting, that anytime I use `// ...` within the code of this article, that is a continuation of the last code block we covered. Most of the code in this article is within the closure for the `admin_init` action we just created above. At end of the article, I'll supply you with the full code, so don't worry if you get a little lost.
+_It's worth noting, that anytime I use `// ...` within the code of this article, that is a continuation of the last code block we covered. Most of the code in this article is within the closure for the `admin_init` action we just created above. At end of the article, I'll supply you with the full code, so don't worry if you get a little lost._
 
 ```php
 // ...
@@ -254,6 +254,142 @@ foreach ( $posts() as $post ) {
 To put it as simply as I can: we push the button. All of our hard work is about to pay off (hopefully). When we push the button, our code should check for the post variable, then it'll run through our script and insert our posts. Nice and easy. Here's a screenshot for all of us visual people:
 
 ![Executing our script and inserting the posts](https://raw.githubusercontent.com/ezekg/sitepoint-programmatically-insert-wp-posts/master/screenshots/insert-posts.jpg)
+
+Like I promised earlier, here's all of the code within a single code block:
+
+```php
+/**
+ * Show 'insert posts' button on backend
+ */
+add_action( "admin_notices", function() {
+    echo "<div class='updated'>";
+    echo "<p>";
+    echo "To insert the posts into the database, click the button to the right.";
+    echo "<a class='button button-primary' style='margin:0.25em 1em' href='{$_SERVER["REQUEST_URI"]}&insert_sitepoint_posts'>Insert Posts</a>";
+    echo "</p>";
+    echo "</div>";
+});
+
+/**
+ * Create and insert posts from CSV files
+ */
+add_action( "admin_init", function() {
+	global $wpdb;
+
+	// I'd recommend replacing this with your own code to make sure
+	//  the post creation _only_ happens when you want it to.
+	if ( ! isset( $_GET["insert_sitepoint_posts"] ) ) {
+		return;
+	}
+
+	// Change these to whatever you set
+	$sitepoint = array(
+		"custom-field" => "sitepoint_post_attachment",
+		"custom-post-type" => "sitepoint_posts"
+	);
+
+	// Get the data from all those CSVs!
+	$posts = function() {
+		$data = array();
+		$errors = array();
+
+		// Get array of CSV files
+		$files = glob( __DIR__ . "/data/*.csv" );
+
+		foreach ( $files as $file ) {
+
+			// Attempt to change permissions if not readable
+			if ( ! is_readable( $file ) ) {
+				chmod( $file, 0744 );
+			}
+
+			// Check if file is writable, then open it in 'read only' mode
+			if ( is_readable( $file ) && $_file = fopen( $file, "r" ) ) {
+
+				// To sum this part up, all it really does is go row by
+				//  row, column by column, saving all the data
+				$post = array();
+
+				// Get first row in CSV, which is of course the headers
+		    	$header = fgetcsv( $_file );
+
+		        while ( $row = fgetcsv( $_file ) ) {
+
+		            foreach ( $header as $i => $key ) {
+	                    $post[$key] = $row[$i];
+	                }
+
+	                $data[] = $post;
+		        }
+
+				fclose( $_file );
+
+			} else {
+				$errors[] = "File '$file' could not be opened. Check the file's permissions to make sure it's readable by your server.";
+			}
+		}
+
+		if ( ! empty( $errors ) ) {
+			// ... do stuff with the errors
+		}
+
+		return $data;
+	};
+
+	// Simple check to see if the current post exists within the
+	//  database. This isn't very efficient, but it works.
+	$post_exists = function( $title ) use ( $wpdb, $sitepoint ) {
+
+		// Get an array of all posts within our custom post type
+		$posts = $wpdb->get_col( "SELECT post_title FROM {$wpdb->posts} WHERE post_type = '{$sitepoint["custom-post-type"]}'" );
+
+		// Check if the passed title exists in array
+		return in_array( $title, $posts );
+	};
+
+	foreach ( $posts() as $post ) {
+
+		// If the post exists, skip this post and go to the next one
+		if ( $post_exists( $post["title"] ) ) {
+			continue;
+		}
+
+		// Insert the post into the database
+		$post["id"] = wp_insert_post( array(
+			"post_title" => $post["title"],
+			"post_content" => $post["content"],
+			"post_type" => $sitepoint["custom-post-type"],
+			"post_status" => "publish"
+		));
+
+		// Get uploads dir
+		$uploads_dir = wp_upload_dir();
+
+		// Set attachment meta
+		$attachment = array();
+		$attachment["path"] = "{$uploads_dir["baseurl"]}/sitepoint-attachments/{$post["attachment"]}";
+		$attachment["file"] = wp_check_filetype( $attachment["path"] );
+		$attachment["name"] = basename( $attachment["path"], ".{$attachment["file"]["ext"]}" );
+
+		// Replace post attachment data
+		$post["attachment"] = $attachment;
+
+		// Insert attachment into media library
+		$post["attachment"]["id"] = wp_insert_attachment( array(
+			"guid" => $post["attachment"]["path"],
+			"post_mime_type" => $post["attachment"]["file"]["type"],
+			"post_title" => $post["attachment"]["name"],
+			"post_content" => "",
+			"post_status" => "inherit"
+		));
+
+		// Update post's custom field with attachment
+		update_field( $sitepoint["custom-field"], $post["attachment"]["id"], $post["id"] );
+		
+	}
+
+});
+```
 
 ## Conclusion
 

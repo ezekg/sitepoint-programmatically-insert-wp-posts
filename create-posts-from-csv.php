@@ -13,7 +13,7 @@ add_action( "admin_notices", function() {
 });
 
 /**
- * Generate posts from CSV
+ * Create and insert posts from CSV files
  */
 add_action( "admin_init", function() {
 	global $wpdb;
