@@ -2,8 +2,6 @@
 
 /**
  * Show insert posts button on backend
- *
- * @link http://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices
  */
 add_action( "admin_notices", function() {
     echo "<div class='updated'>";
@@ -16,8 +14,6 @@ add_action( "admin_notices", function() {
 
 /**
  * Generate posts from CSV
- *
- * @return {Void}
  */
 add_action( "admin_init", function() {
 	global $wpdb;
