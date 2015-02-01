@@ -78,6 +78,7 @@ _It's worth noting, that anytime I use `// ...` within the code of this article,
 
 ```php
 // ...
+
 global $wpdb;
 
 // I'd recommend replacing this with your own code to make sure
@@ -97,7 +98,7 @@ $sitepoint = array(
 
 ### Gathering Our Data
 
-Next, let's create a closure that will fetch all of our CSV data and create a nice associative array of all of the data. Now, it would be good to note that depending on what type of data you're using (whether that be CSV, JSON, Yaml, etc.), this closure will vary. So, I would suggest that you adjust this to fit your data. I've commented the code below so that you can better follow what is actually going on.
+Next, let's create a closure that will fetch our CSV data and create a nice associative array of all of the data. Now, it would be good to note that depending on what type of data you're using (whether that be CSV, JSON, Yaml, etc.), this closure will vary. So, I would suggest that you adjust this to fit your data. I've commented the code below so that you can better follow what is actually going on.
 
 A few additional notes:
 * The `$array[] = "value"` syntax is short for [`array_push`](http://php.net/manual/en/function.array-push.php), which pushes the assigned value onto the end of the array.
@@ -160,7 +161,7 @@ $posts = function() {
 If you're more of a visual person (I know I am), the data that is returned when that closure is executed will be somthing along the lines of this: (and as you can tell above, there's already a simple template for some error handling, just in case you want to do something a little crazy)
 
 ```php
-array(
+$data = array(
     0 => array(
         "title" => "some title",
         "content" => "some content for the post",
@@ -255,7 +256,7 @@ To put it as simply as I can: we push the button. All of our hard work is about 
 
 ![Executing our script and inserting the posts](https://raw.githubusercontent.com/ezekg/sitepoint-programmatically-insert-wp-posts/master/screenshots/insert-posts.jpg)
 
-Like I promised earlier, here's all of the code within a single code block:
+Like I promised earlier, here's the all of the code used within this article:
 
 ```php
 /**
