@@ -53,8 +53,6 @@ add_action( "admin_notices", function() {
 });
 ```
 
-### Setting Up
-
 I mentioned earlier that we would be using anonymous functions (I'll refer to them as [closures](http://culttt.com/2013/03/25/what-are-php-lambdas-and-closures/), for simplicity) throughout this article, and the reason for this is that it's not really worth polluting the global namespace with a bunch of functions that are essentially throw-away functions. Cloures are great, and if you aren't familiar with them, I'd highly suggest reading up on them. If you come from a JavaScript or Ruby background, you'll feel right at home.
 
 If you want to put all of this code into your `functions.php` file, that's fine, though it's also fine if you want to create a separate page template, a hidden page, or whatever. In the end, it really doesn't matter. To start out, let's use another WordPress hook, [`admin_init`](http://codex.wordpress.org/Plugin_API/Action_Reference/admin_init). We'll also include the [`$wpdb`](http://codex.wordpress.org/Class_Reference/wpdb) global, so that we can do a custom database query later on.
@@ -69,8 +67,6 @@ add_action( "admin_init", function() {
 	// ... code will go here
 });
 ```
-
-### To `$_POST` Or Not To `$_POST`
 
 Alright, so what next? Let's start out by check whether or not our `$_POST` variable is present, and if it isn't, we can exit the function. No use in wasting memory on nothing. To check whether our variable is present, we'll use the `$_GET` variable. If you're not familiar with these types of variables, you can read up on them [here](http://php.net/manual/en/reserved.variables.request.php). In addition to the above check, we'll also define our `$sitepoint` array that I mentioned earlier. It will contain your custom post type and custom field ID's.
 
@@ -95,8 +91,6 @@ $sitepoint = array(
 
 // ...
 ```
-
-### Gathering Our Data
 
 Next, let's create a closure that will fetch our CSV data and create a nice associative array of all of the data. Now, it would be good to note that depending on what type of data you're using (whether that be CSV, JSON, Yaml, etc.), this closure will vary. So, I would suggest that you adjust this to fit your data. I've commented the code below so that you can better follow what is actually going on.
 
@@ -176,8 +170,6 @@ $data = array(
 );
 ```
 
-### Double Checking
-
 It might not seem like a lot, but it's enough to get the job done. Next, we need a function that can check whether or not our post is already in the database. Nothing is worse than executing a script that inserts hundreds of posts, only to realize it inserted everything twice. This nifty little closure will query the database, and make sure that doesn't happen. In this closure, we're going to be using the `use()` function to access variables outside of the scope of the closure.
 
 ```php
@@ -196,8 +188,6 @@ $post_exists = function( $title ) use ( $wpdb, $sitepoint ) {
 
 // ...
 ```
-
-### Bout' Time
 
 You're probably wondering when we're actually going to insert all of this data as actual posts, huh? Well, as you can tell, a lot of work has to be put into making sure that all of this data is organized cleanly, and that we have the functions set up to do the checks we need. To start off, we'll execute our `$post()` closure, so that our array of data gets returned so that we can loop over it. Next, we'll execute out `$post_exists()` closure to see if the current post title exists.
 
@@ -250,9 +240,7 @@ foreach ( $posts() as $post ) {
 // ..
 ```
 
-### What next?
-
-To put it as simply as I can: we push the button. All of our hard work is about to pay off (hopefully). When we push the button, our code should check for the post variable, then it'll run through our script and insert our posts. Nice and easy. Here's a screenshot for all of us visual people:
+So, what's next? To put it as simply as I can: we push the button. All of our hard work is about to pay off (hopefully). When we push the button, our code should check for the post variable, then it'll run through our script and insert our posts. Nice and easy. Here's a screenshot for all of us visual people:
 
 ![Executing our script and inserting the posts](https://raw.githubusercontent.com/ezekg/sitepoint-programmatically-insert-wp-posts/master/screenshots/insert-posts.jpg)
 
