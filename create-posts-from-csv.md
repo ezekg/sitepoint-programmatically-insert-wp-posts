@@ -1,4 +1,4 @@
-# Programmatically creating WordPress posts from a CSV
+# Programmatically Creating WordPress Posts From CSV Data
 
 As WordPress developers, we often times encounter projects that need to include previously attained data; whether that be from simple text files, CSV files, or even an old database. Data migration is something any back-end developer will encounter. A few months back, we had a project that needed nearly 1,000 posts to be generated from a plethora of CSV files. Now, usually this wouldn't be _that_ hard; but, this data also needed to be under its own post type, and that custom post type had a few custom fields, including a media attachment for an MP3 file.
 
