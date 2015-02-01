@@ -170,7 +170,7 @@ $data = array(
 );
 ```
 
-It might not seem like a lot, but it's enough to get the job done. Next, we need a function that can check whether or not our post is already in the database. Nothing is worse than executing a script that inserts hundreds of posts, only to realize it inserted everything twice. This nifty little closure will query the database, and make sure that doesn't happen. In this closure, we're going to be using the `use()` function to access variables outside of the scope of the closure.
+It might not seem like a lot, but it's enough to get the job done. Next, we need a function that can check whether or not our post is already in the database. Nothing is worse than executing a script that inserts hundreds of posts, only to realize it inserted everything twice. This nifty little closure will query the database, and make sure that doesn't happen. In this closure, we're going to be using the `use()` function that allows us to access variables outside of the scope of the closure.
 
 ```php
 // ...
@@ -189,9 +189,9 @@ $post_exists = function( $title ) use ( $wpdb, $sitepoint ) {
 // ...
 ```
 
-You're probably wondering when we're actually going to insert all of this data as actual posts, huh? Well, as you can tell, a lot of work has to be put into making sure that all of this data is organized cleanly, and that we have the functions set up to do the checks we need. To start off, we'll execute our `$post()` closure, so that our array of data gets returned so that we can loop over it. Next, we'll execute out `$post_exists()` closure to see if the current post title exists.
+You're probably wondering when we're actually going to insert all of this data as actual posts, huh? Well, as you can tell, a lot of work has to be put into making sure that all of this data is organized cleanly, and that we have the functions set up to do the checks we need. To get this going, we'll execute our `$post()` closure, so that we can loop over the data that gets returned. Next, we'll execute our `$post_exists()` closure to see if the current post title exists.
 
-So, within this code, there's a lot of arrays and data being passed around. I went ahead and commented the code so that you can better understand everything. Basically, we're inserting the post into the database with [`wp_insert_post`](http://codex.wordpress.org/Function_Reference/wp_insert_post), and saving the returned post ID for use later on. Then, we grab the uploads directory and create the needed attachment meta data by creating the path to the uploaded file (which is in `uploads/sitepoint-attachments`); and then finally grabbing the file's name and extension, which we'll use to insert the attachment into our newly created post.
+So, within the code below, there's a lot of arrays and data being passed around. I went ahead and commented the code so that you can better understand everything. Basically, we're inserting the post into the database with [`wp_insert_post`](http://codex.wordpress.org/Function_Reference/wp_insert_post), and saving the returned post ID for use later on. Then, we grab the uploads directory and create the needed attachment meta data by creating the path to the uploaded file (which is in `uploads/sitepoint-attachments`); and then finally grabbing the file's name and extension, which we'll use to insert the attachment into our newly created post.
 
 ```php
 // ..
@@ -244,7 +244,7 @@ So, what's next? To put it as simply as I can: we push the button. All of our ha
 
 ![Executing our script and inserting the posts](https://raw.githubusercontent.com/ezekg/sitepoint-programmatically-insert-wp-posts/master/screenshots/insert-posts.jpg)
 
-Like I promised earlier, here's the all of the code used within this article:
+And that's it! Like I promised earlier, here's the all of the code used within this article:
 
 ```php
 /**
