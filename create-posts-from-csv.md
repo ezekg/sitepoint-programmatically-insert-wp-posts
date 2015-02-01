@@ -35,7 +35,7 @@ It's worth mentioning that the code used in this article requires at least **PHP
 
 Another thing to mention is that I'm not going to get into PHP's [`max_execution_time`](http://php.net/manual/en/info.configuration.php#ini.max-execution-time), which can cause some issues when inserting a large amount of posts in one go; the setting varies so much from server to server that it's not feasible to discuss it in this article. If you'd like to learn more, there's a ton of information on Stack Overflow, as well as on the official PHP docs on how to go about increasing your max execution time.
 
-## Executing Our Code
+## The Nitty-gritty
 
 To start this off, let's create a simple button that executes our script within the _back-end_ of our site. This will ensure that our code is only executed by us, the administrator. To do that, we'll just make use of WordPress' [`admin_notices`](http://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices) hook. Basically, all it's going to be doing is creating a `$_POST` variable that we'll use to determine whether or not we should insert the posts into the database.
 
@@ -95,7 +95,7 @@ $sitepoint = array(
 // ...
 ```
 
-### The Nitty-gritty
+### Gathering Our Data
 
 Next, let's create a closure that will fetch all of our CSV data and create a nice associative array of all of the data. Now, it would be good to note that depending on what type of data you're using (whether that be CSV, JSON, Yaml, etc.), this closure will vary. So, I would suggest that you adjust this to fit your data. I've commented the code below so that you can better follow what is actually going on.
 
