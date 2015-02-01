@@ -19,7 +19,7 @@ In reality, most of the data we'll be using for this article would probably be i
 Before we really get going, let's take a look at all of the data we're going to be dealing with. If you want to follow along, you can grab the needed CSV files (and all of the code used in this article, too) from [this repo](https://github.com/ezekg/sitepoint-programmatically-insert-wp-posts). First things first, let's take a look at the CSV data we'll be using: (please not the 'File' column, which is there to show you that I am spreading all of this data across multiple CSV files)
 
 | File        | Title                 | Content                         | Attachment      |
-| ----------- |:--------------------- |:------------------------------- |:--------------- |
+|:----------- |:--------------------- |:------------------------------- |:--------------- |
 | dummy.csv   | some title            | some content for the post       | attachment1.txt |
 | dummy2.csv  | some title 2          | some content for post 2         | attachment2.txt |
 | dummy3.csv  | some title for post 3 | some content for the third post | attachment3.txt |
