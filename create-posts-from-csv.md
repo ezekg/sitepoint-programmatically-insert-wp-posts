@@ -382,6 +382,6 @@ add_action( "admin_init", function() {
 
 ## Conclusion
 
-Programmatically inserting posts isn't as hard as we think whenever we first start out. Hopefully, this can act as a resource for a lot of people when they need to migrate data that uses both custom post types and custom fields. Like I stated in the beginning of the article, a lot of the code, such as our backend button using `$_POST` variables, shouldn' be used in a production site. The code used in this article should be used as a starting point, rather than a plug-and-play solution.
+Programmatically inserting posts isn't _as hard_ as we initially think. Hopefully, this can act as a resource for a lot of people when they need to migrate data that uses both custom post types and custom fields. Like I stated in the beginning of the article, a lot of the code, such as our backend button using `$_POST` variables, shouldn' be used in a production site. The code used in this article should be used as a starting point, rather than a plug-and-play solution.
 
 I hope you enjoyed the article. If you have any questions or comments, feel free to leave them below and I'll try my best to answer them and troubleshoot any issues that you run into. Happy coding!
