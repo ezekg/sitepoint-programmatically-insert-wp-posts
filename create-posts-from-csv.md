@@ -21,11 +21,11 @@ Before we really get going, let's take a look at all of the data we're going to 
 
 Pretty simple, huh? Next, we'll take a look at the custom post type we'll be using. I created it using [Custom Post Type UI](http://webdevstudios.com/plugins/custom-post-type-ui/), so you can do the same, or do it yourself. Here's a quick screenshot of the options we'll be using: (I am highlighting slugs and other fields that we'll be using throughout this article, so keep that in mind)
 
-![Custom Post Type UI Settings](image.jpg)
+![Custom Post Type UI Settings](https://raw.githubusercontent.com/ezekg/sitepoint-programmatically-insert-wp-posts/master/screenshots/custom-post-type-ui-settings.jpg)
 
 Lastly, let's take a look at the custom field we'll be using. It's created with the lovely [Advanced Custom Fields](http://www.advancedcustomfields.com/). Here's another quick screenshot of the settings we'll be using. Please note, the ID for your custom field will be different from the one used in this article, so be sure to update your `$sitepoint` array with the correct ID. This can be either the actual hash key for the field, or simply the name of the field. I'm just going to stick to the name, for the sake of clarity.
 
-![Advanced Custom Fields Settings](image.jpg)
+![Advanced Custom Fields Settings](https://raw.githubusercontent.com/ezekg/sitepoint-programmatically-insert-wp-posts/master/screenshots/advanced-custom-fields-settings.jpg)
 
 ## A Couple Prerequisites
 
@@ -251,7 +251,7 @@ foreach ( $posts() as $post ) {
 
 To put it as simply as I can: we push the button. All of our hard work is about to pay off (hopefully). When we push the button, our code should check for the post variable, then it'll run through our script and insert our posts. Nice and easy. Here's a screenshot for all of us visual people:
 
-![Executing our script and inserting the posts](images/insert-posts.jpg)
+![Executing our script and inserting the posts](https://raw.githubusercontent.com/ezekg/sitepoint-programmatically-insert-wp-posts/master/screenshots/insert-posts.jpg)
 
 ## Conclusion
 
