@@ -74,7 +74,7 @@ add_action( "admin_init", function() {
 });
 ```
 
-### To `$_POST` or not to `$_POST`
+### To `$_POST` Or Not To `$_POST`
 
 Alright, so what next? Let's start out by check whether or not our `$_POST` variable is present, and if it isn't, we can exit the function. No use in wasting memory on nothing. To check whether out variable is present, we'll use `$_GET`. If you're not familiar with these types of variables, you can read up on them [here](http://php.net/manual/en/reserved.variables.request.php). In addition to the above check, we'll also define out `$sitepoint` array that I mentioned earlier. It will contain your custom post type and custom field ID's.
 
